@@ -41,9 +41,9 @@ class Wee_Base_Model_Feed extends Mage_AdminNotification_Model_Feed
             }
             if ($feedData) {
                 Mage::getModel('adminnotification/inbox')->parse($feedData);
-                $this->setLastUpdate();
             }
         }
+        $this->setLastUpdate();
     }
     
     public function getFeedData()
