@@ -2,10 +2,18 @@
 <config>
     <modules>
         <Wee_Base>
-            <version>1.0.0.1</version>
+            <version>1.0.2</version>
         </Wee_Base>
     </modules>
     <global>
+        <blocks>
+            <wee_base>
+                <class>Wee_Base_Block</class>
+            </wee_base>
+            <wee_base_adminhtml>
+                <class>Wee_Base_Block_Adminhtml</class>
+            </wee_base_adminhtml>
+        </blocks>
         <models>
             <wee_base>
                 <class>Wee_Base_Model</class>
@@ -35,6 +43,17 @@
             </wee_base_setup>
         </resources>
     </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Wee_Base before="Mage_Adminhtml">Wee_Base_Adminhtml</Wee_Base>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
     <default>
         <system>
             <wee_base>
