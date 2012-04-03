@@ -1,0 +1,17 @@
+htdocs/app/code/community/Wee/DeveloperToolbar app/code/community/Wee/DeveloperToolbar
+htdocs/app/design/adminhtml/default/default/layout/wee_developertoolbar.xml app/design/adminhtml/default/default/layout/wee_developertoolbar.xml
+htdocs/app/design/adminhtml/default/default/template/wee_developertoolbar app/design/adminhtml/default/default/template/wee_developertoolbar
+htdocs/app/design/frontend/default/default/layout/wee_developertoolbar.xml app/design/frontend/default/default/layout/wee_developertoolbar.xml
+htdocs/app/design/frontend/default/default/template/wee_developertoolbar app/design/frontend/default/default/template/wee_developertoolbar
+htdocs/app/etc/modules/Wee_DeveloperToolbar.xml app/etc/modules/Wee_DeveloperToolbar.xml
+htdocs/js/wee_developertoolbar js/wee_developertoolbar
+htdocs/media/wee_developertoolbar media/wee_developertoolbar
+
+# Enable the profiler in index.php
+# Backup index.php to index.php.backup
+@shell cp $PROJECT/index.php $PROJECT/index.php.backup && echo "Backed up index.php to index.php.backup"
+# Update the code to enable the profiler
+@shell sed -i 's/#Varien_Profiler::enable();/Varien_Profiler::enable();/g' $PROJECT/index.php && echo "Enabled Magento Profiler"
+
+# Clear the cache
+@shell   rm -rf $PROJECT/var/cache/* && echo "Magento Cache cleared"
