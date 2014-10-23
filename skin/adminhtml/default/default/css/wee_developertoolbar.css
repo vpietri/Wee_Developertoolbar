@@ -63,6 +63,7 @@
 
 #weeDeveloperToolbarContainer ul li.content {
   cursor:pointer;
+  margin-top: 0px;
 }
  
 #weeDeveloperToolbarContainer ul li img {
