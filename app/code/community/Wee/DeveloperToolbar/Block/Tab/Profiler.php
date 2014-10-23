@@ -37,7 +37,7 @@ class Wee_DeveloperToolbar_Block_Tab_Profiler extends Wee_DeveloperToolbar_Block
         uasort($timers, array('self', 'compareTimers'));
         return $timers;
     }
-    
+
     static public function compareTimers(array $timerA, array $timerB)
     {
        return $timerA['sum'] < $timerB['sum'];

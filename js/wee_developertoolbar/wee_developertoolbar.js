@@ -28,9 +28,9 @@ document.observe("dom:loaded", function() {
     
     $$('ul.tabContainer li').each( function(element){
         element.observe("click",function(event){
-            var id = extractId(Event.element(event));
-            
-            $$(".tabContent").each(function(elem) {
+            var subTabElem = Event.element(event)
+            var id = extractId(subTabElem);
+            subTabElem.up('div').select('.tabContent').each(function(elem) {
                 if (elem.readAttribute("id") != "tabContent_"+id) {
                     $('tab_'+extractId(elem)).removeClassName("active");
                     elem.hide();     

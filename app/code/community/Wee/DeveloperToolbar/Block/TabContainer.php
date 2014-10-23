@@ -23,31 +23,45 @@ class Wee_DeveloperToolbar_Block_TabContainer extends Wee_DeveloperToolbar_Block
 {
     protected $_tabs = array();
     protected $name;
-    
-    public function __construct($name) 
+
+    public function __construct($name)
     {
         parent::__construct();
         $this->name = $name;
         if (!$this->hasData('template')) {
             $this->setTemplate('wee_developertoolbar/tabcontainer.phtml');
         }
+
+
+        $toolbarConfig = Mage::helper('wee_developertoolbar')->getToolbarConfig($name);
+        foreach($toolbarConfig->getTabContainer() as $tabKey => $tabConfig) {
+
+            if(empty($tabConfig['class_tab'])) {
+                $blockClassName = 'Wee_DeveloperToolbar_Block_Tab_' . uc_words($tabKey,'');
+                $blockItem = new $blockClassName(str_replace('_', '', $tabKey), $tabConfig['label']);
+            } else {
+                throw new Exception('Specific tab block not handle');
+            }
+
+            $this->addTab($blockItem);
+        }
     }
-    
+
     public function addTab(Wee_DeveloperToolbar_Block_Tab $tab)
     {
-       $this->_tabs[] = $tab;    
+       $this->_tabs[] = $tab;
     }
-    
+
     public function getTabs()
     {
         return $this->_tabs;
     }
-    
+
     public function getName()
     {
         return $this->name;
     }
-    
+
     public function setName($name)
     {
         $this->name = $name;

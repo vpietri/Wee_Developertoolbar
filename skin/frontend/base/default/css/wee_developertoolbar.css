@@ -134,7 +134,8 @@ div.tabContainer ul.tabContainer li a:hover  {
 #tabContent_database ol {
   list-style:decimal;
   padding:20px 0px 0px 20px;
-  width:600px;    
+  width:90%;
+  margin-left: 20px;
 }
 
 #tabContent_database ol li {
@@ -195,7 +196,7 @@ span.weeDeveloperToolbarLogInfo {
 #tabContent_blocks ul li a, #tabContent_events ul li a {
   text-decoration:none;
   color:#666666;
-  background:url(/media/wee_developertoolbar/bullet_toggle_plus.png) no-repeat 0 1px; 
+  background:url(../images/wee_developertoolbar/bullet_toggle_plus.png) no-repeat 0 1px; 
   padding:0px 0px 0px 15px;
 }
 

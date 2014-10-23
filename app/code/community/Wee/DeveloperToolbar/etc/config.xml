@@ -71,4 +71,46 @@
             </updates>
         </layout>
     </frontend>
+   <default>
+        <developertoolbar>
+            <items>
+              <version>
+                <label>Wee_DeveloperToolbar_Helper_Data::getLabelVersion</label>
+              </version>
+              <info>
+                <icon>images/wee_developertoolbar/info.png</icon>
+                <tab_container>
+                    <request><label>Request</label></request>
+                    <general><label>General</label></general>
+                    <handles><label>Handles</label></handles>
+                    <events><label>Events/Observer</label></events>
+                    <blocks><label>Blocks</label></blocks>
+                    <config><label>Config</label></config>
+                    <php_info><label>PHP-Info</label></php_info>
+                </tab_container>
+              </info>
+              <profiler>
+                <icon>images/wee_developertoolbar/profiler.png</icon>
+                <tab_container>
+                  <profiler><label>Profiler</label></profiler>
+                </tab_container>
+              </profiler> 
+              <time>
+                <icon>images/wee_developertoolbar/time.png</icon>
+                <label>Wee_DeveloperToolbar_Helper_Data::getLabelTime</label>
+              </time> 
+              <memory>
+                <icon>images/wee_developertoolbar/memory.png</icon>
+                <label>Wee_DeveloperToolbar_Helper_Data::getLabelMemory</label>
+              </memory>
+              <database>
+                <label>Wee_DeveloperToolbar_Helper_Data::getLabelDatabase</label>
+                <icon>images/wee_developertoolbar/database.png</icon>
+                <tab_container>
+                  <database><label>Database Queries</label></database>
+                </tab_container>
+              </database> 
+            </items>
+        </developertoolbar>
+    </default>
 </config>

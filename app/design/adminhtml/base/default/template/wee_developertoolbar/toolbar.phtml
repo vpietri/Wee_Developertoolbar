@@ -1,18 +1,23 @@
-<div class="weeDeveloperToolbar" id="weeDeveloperToolbarContainer">
-  <img class="magentoLogo" src="<?php echo $this->getSkinUrl('images/wee_developertoolbar/logo.png'); ?>" alt="" />
-    <?php if ($this->getItems()): ?>
-    <ul id="weeDeveloperToolbar">
-        <?php foreach ($this->getItems() as $item): ?>
-          <?php echo $item->render(); ?>
-        <?php endforeach ?>
-    </ul>
-    <?php endif ?>
-</div>
+<?php
 
-<?php foreach ($this->getItems() as $item): ?>
-  <?php if ($item->getContent()): ?>
-    <div class="weeDeveloperToolbarDetails" id="weeDeveloperToolbarDetails_<?php echo $item->getName(); ?>" style="display:none;">
-      <?php echo $item->renderContent(); ?>
+?>
+<?php if ($this->canViewToolbar()): ?>
+    <div class="weeDeveloperToolbar" id="weeDeveloperToolbarContainer">
+      <img class="magentoLogo" src="<?php echo $this->getSkinUrl('images/wee_developertoolbar/logo.png'); ?>" alt="" />
+        <?php if ($this->getItems()): ?>
+        <ul id="weeDeveloperToolbar">
+            <?php foreach ($this->getItems() as $item): ?>
+              <?php echo $item->render(); ?>
+            <?php endforeach ?>
+        </ul>
+        <?php endif ?>
     </div>
-  <?php endif ?>
-<?php endforeach ?>
+
+    <?php foreach ($this->getItems() as $item): ?>
+      <?php if ($item->getContent()): ?>
+        <div class="weeDeveloperToolbarDetails" id="weeDeveloperToolbarDetails_<?php echo $item->getName(); ?>" style="display:none;">
+          <?php echo $item->renderContent(); ?>
+        </div>
+      <?php endif ?>
+    <?php endforeach ?>
+<?php endif;?>

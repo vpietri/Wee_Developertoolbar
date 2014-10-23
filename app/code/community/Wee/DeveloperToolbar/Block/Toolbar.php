@@ -25,26 +25,38 @@ class Wee_DeveloperToolbar_Block_Toolbar extends Wee_DeveloperToolbar_Block_Temp
 
     public function __construct()
     {
-        $this->_addDefaultItems();  
+        $this->_addDefaultItems();
     }
-    
+
     protected function _addDefaultItems()
     {
-        $this->_addItem(new Wee_DeveloperToolbar_Block_Toolbar_Item_Version('version'));
-        $this->_addItem(new Wee_DeveloperToolbar_Block_Toolbar_Item_Info('info', 'info'));
-        $this->_addItem(new Wee_DeveloperToolbar_Block_Toolbar_Item_Profiler('profiler', 'profiler'));
-        $this->_addItem(new Wee_DeveloperToolbar_Block_Toolbar_Item_Time('time'));
-        $this->_addItem(new Wee_DeveloperToolbar_Block_Toolbar_Item_Memory('memory'));
-        $this->_addItem(new Wee_DeveloperToolbar_Block_Toolbar_Item_Database('database'));    
+
+        $toolbarConfig = Mage::helper('wee_developertoolbar')->getToolbarConfig();
+        foreach($toolbarConfig as $itemKey => $itemConfig) {
+            if(!$itemConfig->getClassItem()) {
+                //$blockItem = $this->getLayout()->createBlock('wee_developertoolbar/toolbar_item_'.$itemKey, '', array($itemKey));
+                //$blockClassName = 'Wee_DeveloperToolbar_Block_Toolbar_Item_' . uc_words($itemKey);
+                $blockClassName = 'Wee_DeveloperToolbar_Block_Toolbar_Item';
+                $blockItem = new $blockClassName($itemKey,$itemKey);
+            } else {
+                throw new Exception('Specific block not handle');
+            }
+            $this->_addItem($blockItem);
+        }
     }
-    
+
     protected function _addItem(Wee_DeveloperToolbar_Block_Toolbar_Item $item)
     {
-        $this->_items[] = $item;    
+        $this->_items[] = $item;
     }
-    
+
     protected function getItems()
     {
         return $this->_items;
+    }
+
+    public function canViewToolbar()
+    {
+        return Mage::helper('wee_developertoolbar')->isRequestAllowed();
     }
 }
