@@ -1,11 +1,15 @@
 document.observe("dom:loaded", function() {
     
-    //$("weeDeveloperToolbar").hide();
+    var weeCookieName = 'weeDeveloperToolbar';
+    
+    if (Mage && Mage.Cookies.get(weeCookieName) && Mage.Cookies.get(weeCookieName)==0) {
+        $("weeDeveloperToolbar").hide();  
+    }
     
     $('weeDeveloperToolbarContainer').select('img').first().observe('click', function(){
         $$(".weeDeveloperToolbarDetails").invoke('hide');
         $("weeDeveloperToolbar").toggle();
-        //$("weeDeveloperToolbarPoweredBy").toggle();
+        Mage.Cookies.set(weeCookieName,  (($("weeDeveloperToolbar").visible()) ? "1" : "0"));
     });
     
     

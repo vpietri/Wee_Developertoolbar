@@ -2,6 +2,7 @@
 <layout version="0.1.0">
     <default>
         <reference name="head">
+            <action method="addJs"><script>mage/cookies.js</script></action>        
             <action method="addItem"><type>js_css</type><name>wee_developertoolbar/wee_developertoolbar.css</name></action>
             <action method="addJs"><script>wee_developertoolbar/wee_developertoolbar.js</script></action>
         </reference>
