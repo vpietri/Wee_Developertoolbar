@@ -104,12 +104,12 @@
                 <label>Wee_DeveloperToolbar_Helper_Data::getLabelTime</label>
               </time> 
               <memory>
-                <sort_order>40</sort_order>
+                <sort_order>50</sort_order>
                 <icon>images/wee_developertoolbar/memory.png</icon>
                 <label>Wee_DeveloperToolbar_Helper_Data::getLabelMemory</label>
               </memory>
               <database>
-                <sort_order>50</sort_order>
+                <sort_order>60</sort_order>
                 <label>Wee_DeveloperToolbar_Helper_Data::getLabelDatabase</label>
                 <icon>images/wee_developertoolbar/database.png</icon>
                 <tab_container>

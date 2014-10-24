@@ -43,11 +43,15 @@ class Wee_DeveloperToolbar_Block_TabContainer extends Wee_DeveloperToolbar_Block
                     $blockClassName = $tabConfig['class_tab'];
                 }
 
-                $blockItem = new $blockClassName(str_replace('_', '', $tabKey), $tabConfig['label']);
+                if(class_exists($blockClassName)) {
+                    $blockItem = new $blockClassName(str_replace('_', '', $tabKey), $tabConfig['label']);
+                } else {
+                    throw new Exception($this->__('Specific tab block "%s" not handle by wee developer container.', $blockClassName));
+                }
                 $this->addTab($blockItem);
 
             } catch (Exception $e) {
-                Mage::logException(new Exception($this->__('Specific tab block "%s" not handle by wee developer container.', $blockClassName)));
+                Mage::logException($e);
             }
         }
     }

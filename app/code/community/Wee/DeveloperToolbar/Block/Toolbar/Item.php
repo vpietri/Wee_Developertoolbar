@@ -22,8 +22,13 @@
 class Wee_DeveloperToolbar_Block_Toolbar_Item extends Wee_DeveloperToolbar_Block_Template
 {
     protected $_name;
+
     protected $_content;
+
     protected $_label;
+
+    protected $_label_callback;
+
     protected $_icon;
 
     public function __construct($name, $label = '')
@@ -49,13 +54,7 @@ class Wee_DeveloperToolbar_Block_Toolbar_Item extends Wee_DeveloperToolbar_Block
         if($toolbarConfig->getLabel()) {
             $tabLabel = $toolbarConfig->getLabel();
             if ( preg_match('/(.*?)::(.*)/', $tabLabel, $matches)) {
-                try {
-                    $class = new $matches[1];
-                    $label = $class->{$matches[2]}();
-                    $this->setLabel($label);
-                } catch (Exception $e) {
-                    Mage::logException(new Exception($this->__('Specific label "%s" not handle by wee developer item block.', $tabLabel)));
-                }
+                $this->_label_callback=array('class'=>$matches[1], 'method'=>$matches[2]);
             } else {
                 $this->setLabel($tabLabel);
             }
@@ -75,6 +74,16 @@ class Wee_DeveloperToolbar_Block_Toolbar_Item extends Wee_DeveloperToolbar_Block
 
     public function getLabel()
     {
+        if (!empty($this->_label_callback)) {
+            try {
+                $class = new $this->_label_callback['class'];
+                $label = $class->{$this->_label_callback['method']}();
+                $this->setLabel($label);
+            } catch (Exception $e) {
+                Mage::logException(new Exception($this->__('Specific label "%s" not handle by wee developer item block.', implode('::', $this->_label_callback))));
+            }
+        }
+
         return $this->_label;
     }
 
