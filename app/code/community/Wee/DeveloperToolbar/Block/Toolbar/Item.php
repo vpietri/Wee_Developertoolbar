@@ -48,14 +48,16 @@ class Wee_DeveloperToolbar_Block_Toolbar_Item extends Wee_DeveloperToolbar_Block
 
         if($toolbarConfig->getLabel()) {
             $tabLabel = $toolbarConfig->getLabel();
-            try {
-                if ( preg_match('/(.*?)::(.*)/', $tabLabel, $matches)) {
+            if ( preg_match('/(.*?)::(.*)/', $tabLabel, $matches)) {
+                try {
                     $class = new $matches[1];
                     $label = $class->{$matches[2]}();
                     $this->setLabel($label);
+                } catch (Exception $e) {
+                    Mage::logException(new Exception($this->__('Specific label "%s" not handle by wee developer item block.', $tabLabel)));
                 }
-            } catch (Exception $e) {
-                $this->setLabel(uc_words($label, ' '));
+            } else {
+                $this->setLabel($tabLabel);
             }
         }
 

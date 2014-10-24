@@ -21,6 +21,9 @@
 
 class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    protected $_toolbar_config;
+
+
     public function formatBytes($bytes)
     {
         $size = $bytes / 1024;
@@ -79,45 +82,50 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
 
     function getToolbarConfig($name=false)
     {
+        if (is_null($this->_toolbar_config)) {
+            $path = 'default/developertoolbar/items';
 
-        $path = 'default/developertoolbar/items';
+            $this->_toolbar_config = array();
+            if(Mage::getConfig()->getNode($path)) {
+                $configNodes = Mage::getConfig()->getNode($path)->children();
+                if ($configNodes) {
+                    foreach($configNodes as $itemKey => $itemConfig){
+                        $itemLine = $itemConfig->asArray();
 
-        $config = array();
-        if(Mage::getConfig()->getNode($path)) {
-            $configNodes = Mage::getConfig()->getNode($path)->children();
-            if ($configNodes) {
-                foreach($configNodes as $itemKey => $itemConfig){
-                    $itemLine = $itemConfig->asArray();
+                        $configKey = (string) $itemKey;
 
-                    $configKey = (string) $itemKey;
+                        if(empty($itemLine['label'])) {
+                            $itemLine['label'] = ucwords($configKey);
+                        }
 
+                        if(empty($itemLine['tab_container'])) {
+                            $itemLine['tab_container'] = array();
+                        }
 
-
-                    if(empty($itemLine['label'])) {
-                        $itemLine['label'] = ucwords($configKey);
+                        $this->_toolbar_config[$configKey] = new Varien_Object($itemLine);
                     }
-
-                    if(empty($itemLine['tab_container'])) {
-                        $itemLine['tab_container'] = array();
-                    }
-
-                    $config[$configKey] = new Varien_Object($itemLine);
                 }
             }
+            uasort($this->_toolbar_config, array($this,'_sortToolbarConfig'));
         }
 
+        return ($name && isset($this->_toolbar_config[$name])) ? $this->_toolbar_config[$name] : $this->_toolbar_config;
+    }
 
-        return ($name && isset($config[$name])) ? $config[$name] : $config;
+    protected function _sortToolbarConfig($a, $b)
+    {
+        if($a->getSortOrder()<$b->getSortOrder()) {
+            return -1;
+        } elseif($a->getSortOrder()>$b->getSortOrder()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     public function getLabelVersion()
     {
         return Mage::getVersion();
-    }
-
-    public function getLabelInfo()
-    {
-
     }
 
     public function getLabelTime()
@@ -135,18 +143,5 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
         $profiler = Mage::getSingleton('core/resource')->getConnection('core_write')->getProfiler();
         return $profiler->getTotalNumQueries();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

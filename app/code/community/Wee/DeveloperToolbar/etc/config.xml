@@ -75,9 +75,11 @@
         <developertoolbar>
             <items>
               <version>
+                <sort_order>10</sort_order>
                 <label>Wee_DeveloperToolbar_Helper_Data::getLabelVersion</label>
               </version>
               <info>
+                <sort_order>20</sort_order>
                 <icon>images/wee_developertoolbar/info.png</icon>
                 <tab_container>
                     <request><label>Request</label></request>
@@ -90,20 +92,24 @@
                 </tab_container>
               </info>
               <profiler>
+                <sort_order>30</sort_order>
                 <icon>images/wee_developertoolbar/profiler.png</icon>
                 <tab_container>
                   <profiler><label>Profiler</label></profiler>
                 </tab_container>
               </profiler> 
               <time>
+                <sort_order>40</sort_order>
                 <icon>images/wee_developertoolbar/time.png</icon>
                 <label>Wee_DeveloperToolbar_Helper_Data::getLabelTime</label>
               </time> 
               <memory>
+                <sort_order>40</sort_order>
                 <icon>images/wee_developertoolbar/memory.png</icon>
                 <label>Wee_DeveloperToolbar_Helper_Data::getLabelMemory</label>
               </memory>
               <database>
+                <sort_order>50</sort_order>
                 <label>Wee_DeveloperToolbar_Helper_Data::getLabelDatabase</label>
                 <icon>images/wee_developertoolbar/database.png</icon>
                 <tab_container>
