@@ -204,3 +204,29 @@ span.weeDeveloperToolbarLogInfo {
   background:#DDDDDD;
 }
 
+
+
+button.developerToolbar::-moz-focus-inner {
+    border: 0 none;
+    padding: 0;
+}
+button.developerToolbar {
+}
+button.developerToolbar{
+    background: url("../images/wee_developertoolbar/btn_bg.gif") repeat-x scroll 0 100% #ffac47;
+    border-color: #ed6502 #a04300 #a04300 #ed6502;
+    border-style: solid;
+    border-width: 1px;
+    color: #fff;
+    cursor: pointer;
+    font: bold 12px arial,helvetica,sans-serif;
+    padding: 1px 7px 2px;
+    text-align: center !important;
+    white-space: nowrap;
+}
+button.developerToolbar:hover {
+    background: url("../images/wee_developertoolbar/btn_over_bg.gif") repeat-x scroll 0 0 #f77c16;
+}
+button.developerToolbar:active {
+    background: url("../images/wee_developertoolbar/btn_on_bg.gif") repeat-x scroll 0 0 #f77c16;
+}

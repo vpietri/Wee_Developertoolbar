@@ -1,7 +1,17 @@
 <?php
-
 ?>
 <?php if ($this->canViewToolbar()): ?>
+    <?php echo $this->getArea(); ?>
+
+    <?php if (Mage::app()->getStore()->isAdmin()): ?>
+        <script type="text/javascript">
+        //<![CDATA[
+        Mage.Cookies.path     = '<?php echo $this->getPath()?>';
+        Mage.Cookies.domain   = '<?php echo $this->getDomain()?>';
+        //]]>
+        </script>
+    <?php endif ?>
+
     <div class="weeDeveloperToolbar" id="weeDeveloperToolbarContainer">
       <img class="magentoLogo" src="<?php echo $this->getSkinUrl('images/wee_developertoolbar/logo.png'); ?>" alt="" />
         <?php if ($this->getItems()): ?>

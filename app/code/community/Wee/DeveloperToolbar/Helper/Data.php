@@ -15,6 +15,7 @@
  * @category    Wee
  * @package     Wee_DeveloperToolbar
  * @author      Stefan Wieczorek <stefan.wieczorek@mgt-commerce.com>
+ * @author      Vincent Pietri (contributor)
  * @copyright   Copyright (c) 2011 (http://www.mgt-commerce.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
@@ -59,8 +60,34 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
 
-    function isRequestAllowed() {
-        $allowedIps = Mage::getStoreConfig('dev/restrict/allow_ips');
+    function isToolbarAccessAllowed($beforeContext = false) {
+
+        $allowedIps = '';
+        $toolbarHeader = '';
+        //When cache activated we do not have acces to current storeId and can throw an exception in Mage::app()->getStore()
+        // on call to isToolbarAccessAllowed in Wee_DeveloperToolbar_Model_Resource
+        try {
+            $cacheKey = 'Wee_DeveloperToolbar_Config';
+            if (Mage::app()->useCache('config')) {
+                $toolbarConfig = Mage::app()->loadCache($cacheKey);
+                if($toolbarConfig) {
+                    $toolbarConfig = unserialize($toolbarConfig);
+                    $allowedIps = $toolbarConfig['ips'];
+                    $toolbarHeader = $toolbarConfig['header'];
+                } else {
+                    $allowedIps = Mage::getStoreConfig('dev/restrict/allow_ips');
+                    $toolbarHeader = Mage::getStoreConfig('dev/restrict/toolbar_header');
+
+                    Mage::app()->saveCache(serialize(array('ips'=>$allowedIps,'header'=>$toolbarHeader)), $cacheKey);
+                }
+            } else {
+
+            }
+
+        } catch (Exception $e) {
+            //Mage::getIsDeveloperMode()
+        }
+
         $clientIp = $this->_getRequest()->getClientIp();
 
         if ($clientIp=='127.0.0.1') {
@@ -75,6 +102,13 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
             }
         } else {
             $allow = false;
+        }
+
+        if(!empty($toolbarHeader)) {
+            $helper = Mage::helper('core/http');
+        		if(!preg_match('/' . $toolbarHeader . '/', $helper->getHttpUserAgent(true))) {
+        		    $allow = false;
+        		}
         }
 
         return $allow;
@@ -142,6 +176,64 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $profiler = Mage::getSingleton('core/resource')->getConnection('core_write')->getProfiler();
         return $profiler->getTotalNumQueries();
+    }
+
+    /**
+     *
+     * Cut an paste from Hackathon_MageMonitoring_Helper_Data::tailFile
+     * @see https://github.com/magento-hackathon/Hackathon_MageMonitoring/blob/master/app/code/community/Hackathon/MageMonitoring/Helper/Data.php
+     *
+     * tail -n in php, kindly lifted from https://gist.github.com/lorenzos/1711e81a9162320fde20
+     *
+     * @param string $filepath
+     * @param int $lines
+     * @param bool $adaptive use adaptive buffersize for seeking, if false use static buffersize of 4096
+     *
+     * @return string
+     */
+    function tailFile($filepath, $lines = 1, $adaptive = true) {
+        // Open file
+        $f = @fopen($filepath, "rb");
+        if ($f === false) return false;
+
+        // Sets buffer size
+        if (!$adaptive) $buffer = 4096;
+        else $buffer = ($lines < 2 ? 64 : ($lines < 10 ? 512 : 4096));
+
+        // Jump to last character
+        fseek($f, -1, SEEK_END);
+
+        // Read it and adjust line number if necessary
+        // (Otherwise the result would be wrong if file doesn't end with a blank line)
+        if (fread($f, 1) != "\n") $lines -= 1;
+
+        // Start reading
+        $output = '';
+        $chunk = '';
+
+        // While we would like more
+        while (ftell($f) > 0 && $lines >= 0) {
+            // Figure out how far back we should jump
+            $seek = min(ftell($f), $buffer);
+            // Do the jump (backwards, relative to where we are)
+            fseek($f, -$seek, SEEK_CUR);
+            // Read a chunk and prepend it to our output
+            $output = ($chunk = fread($f, $seek)) . $output;
+            // Jump back to where we started reading
+            fseek($f, -mb_strlen($chunk, '8bit'), SEEK_CUR);
+            // Decrease our line counter
+            $lines -= substr_count($chunk, "\n");
+        }
+
+        // While we have too many lines
+        // (Because of buffer size we might have read too many)
+        while ($lines++ < 0) {
+            // Find first newline and remove all text before that
+            $output = substr($output, strpos($output, "\n") + 1);
+        }
+        // Close file and return
+        fclose($f);
+        return trim($output);
     }
 
 }

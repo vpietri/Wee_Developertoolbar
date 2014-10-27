@@ -1,0 +1,61 @@
+<?php
+
+?>
+<button type="button" onClick="javascript:resetAllLogs();return false;" class="developerToolbar">Reset all Logs</button>
+<br/>
+<br/>
+
+<?php foreach ($this->getLogFiles() as $logFile):?>
+<h3><?php echo $logFile ?>&nbsp;<button type="button" onClick="javascript:resetLog('<?php echo $logFile ?>');return false;" class="developerToolbar">Reset</button></h3>
+Tail the <?php echo $this->getTailLines() ?> last lines
+<pre id= "<?php echo $logFile ?>" style="border:1px solid;padding:5px;background:#fffcd8;">
+<?php //echo $this->getLogContent($logFile) ?>
+</pre>
+<br/>
+<?php endforeach;?>
+<script type="text/javascript">
+<!--
+var logFiles = <?php echo $this->getJsonLogFiles() ?>;
+
+document.observe("dom:loaded", function() {
+    logFiles.each(function(file){
+        $('<?php echo $this->getIdContainer() ?>').observe('click', function() {
+            loadLogContent(file);
+        });
+    });
+
+    var tabActive = $$('li#<?php echo $this->getIdContainer() ?>').first();
+
+    if (tabActive && tabActive.hasClassName('active')) {
+        logFiles.each(function(file){
+            //loadLogContent(file);
+        });
+    }
+});
+
+
+loadLogContent = function(logfile)
+{
+    new Ajax.Updater(logfile, '<?php echo $this->getUrlLog() ?>', {
+        parameters: { file: logfile }
+      });
+}
+
+resetAllLogs = function()
+{
+    logFiles.each(function(logfile){
+        resetLog(logfile);
+    });
+
+}
+
+resetLog = function(logfile)
+{
+    new Ajax.Request('<?php echo $this->getUrlLog('reset') ?>', {method: 'post', onFailure: '', parameters: {file: logfile}});
+    loadLogContent(logfile);
+}
+
+
+
+//-->
+</script>

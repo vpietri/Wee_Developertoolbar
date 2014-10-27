@@ -15,43 +15,28 @@
  * @category    Wee
  * @package     Wee_DeveloperToolbar
  * @author      Stefan Wieczorek <stefan.wieczorek@mgt-commerce.com>
+ * @author      Vincent Pietri (contributor)
  * @copyright   Copyright (c) 2011 (http://www.mgt-commerce.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-class Wee_DeveloperToolbar_Model_Resource extends Mage_Core_Model_Resource 
+class Wee_DeveloperToolbar_Model_Resource extends Mage_Core_Model_Resource
 {
-    public function getConnection($name)
+    /**
+     * Create new connection adapter instance by connection type and config
+     *
+     * @param string $type the connection type
+     * @param Mage_Core_Model_Config_Element|array $config the connection configuration
+     * @return Varien_Db_Adapter_Interface|false
+     */
+    protected function _newConnection($type, $config)
     {
-        if (isset($this->_connections[$name])) {
-            return $this->_connections[$name];
-        }
-        $connConfig = Mage::getConfig()->getResourceConnectionConfig($name);
-        if (!$connConfig) {
-            $this->_connections[$name] = $this->_getDefaultConnection($name);
-            return $this->_connections[$name];
-        }
-        if (!$connConfig->is('active', 1)) {
-            return false;
-        }
-        $origName = $connConfig->getParent()->getName();
+        $connection = parent::_newConnection($type, $config);
 
-        if (isset($this->_connections[$origName])) {
-            $this->_connections[$name] = $this->_connections[$origName];
-            return $this->_connections[$origName];
+        if (Mage::helper('wee_developertoolbar')->isToolbarAccessAllowed(true)) {
+            $connection->getProfiler()->setEnabled(true);
         }
 
-        $typeInstance = $this->getConnectionTypeInstance((string)$connConfig->type);
-        $conn = $typeInstance->getConnection($connConfig);
-        $conn->getProfiler()->setEnabled(true);
-        if (method_exists($conn, 'setCacheAdapter')) {
-            $conn->setCacheAdapter(Mage::app()->getCache());
-        }
-
-        $this->_connections[$name] = $conn;
-        if ($origName!==$name) {
-            $this->_connections[$origName] = $conn;
-        }
-        return $conn;
-    } 	
+        return $connection;
+    }
 }

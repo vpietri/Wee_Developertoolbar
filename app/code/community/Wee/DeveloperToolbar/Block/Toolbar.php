@@ -15,6 +15,7 @@
  * @category    Wee
  * @package     Wee_DeveloperToolbar
  * @author      Stefan Wieczorek <stefan.wieczorek@mgt-commerce.com>
+ * @author      Vincent Pietri (contributor)
  * @copyright   Copyright (c) 2011 (http://www.mgt-commerce.com)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
@@ -34,8 +35,6 @@ class Wee_DeveloperToolbar_Block_Toolbar extends Wee_DeveloperToolbar_Block_Temp
         $toolbarConfig = Mage::helper('wee_developertoolbar')->getToolbarConfig();
         foreach($toolbarConfig as $itemKey => $itemConfig) {
             if(!$itemConfig->getClassItem()) {
-                //$blockItem = $this->getLayout()->createBlock('wee_developertoolbar/toolbar_item_'.$itemKey, '', array($itemKey));
-                //$blockClassName = 'Wee_DeveloperToolbar_Block_Toolbar_Item_' . uc_words($itemKey);
                 $blockClassName = 'Wee_DeveloperToolbar_Block_Toolbar_Item';
                 $blockItem = new $blockClassName($itemKey,$itemKey);
             } else {
@@ -57,6 +56,6 @@ class Wee_DeveloperToolbar_Block_Toolbar extends Wee_DeveloperToolbar_Block_Temp
 
     public function canViewToolbar()
     {
-        return Mage::helper('wee_developertoolbar')->isRequestAllowed();
+        return Mage::helper('wee_developertoolbar')->isToolbarAccessAllowed();
     }
 }

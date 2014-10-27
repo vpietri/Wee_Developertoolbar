@@ -1,6 +1,6 @@
 app/code/community/Wee/DeveloperToolbar app/code/community/Wee/DeveloperToolbar
-app/design/adminhtml/base/default/layout/wee_developertoolbar.xml app/design/adminhtml/base/default/layout/wee_developertoolbar.xml
-app/design/adminhtml/base/default/template/wee_developertoolbar app/design/adminhtml/base/default/template/wee_developertoolbar
+app/design/adminhtml/default/default/layout/wee_developertoolbar.xml app/design/adminhtml/default/default/layout/wee_developertoolbar.xml
+app/design/adminhtml/default/default/template/wee_developertoolbar app/design/adminhtml/default/default/template/wee_developertoolbar
 app/design/frontend/base/default/layout/wee_developertoolbar.xml app/design/frontend/base/default/layout/wee_developertoolbar.xml
 app/design/frontend/base/default/template/wee_developertoolbar app/design/frontend/base/default/template/wee_developertoolbar
 app/etc/modules/Wee_DeveloperToolbar.xml app/etc/modules/Wee_DeveloperToolbar.xml

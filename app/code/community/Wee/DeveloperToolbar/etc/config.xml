@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Wee_DeveloperToolbar>
-            <version>3.0.0</version>
+            <version>2.5.0</version>
         </Wee_DeveloperToolbar>
     </modules>
     <global>
@@ -13,11 +13,6 @@
             <wee_developertoolbar_item>
                 <class>Wee_DeveloperToolbar_Block_Toolbar_Item</class>
             </wee_developertoolbar_item>
-            <core>
-                <rewrite>
-                    <profiler>Wee_DeveloperToolbar_Block_Profiler</profiler>
-                </rewrite>
-            </core>
         </blocks>
         <helpers>
             <wee_developertoolbar>
@@ -115,7 +110,17 @@
                 <tab_container>
                   <database><label>Database Queries</label></database>
                 </tab_container>
-              </database> 
+              </database>
+              <monitoring>
+                <sort_order>70</sort_order>
+                <label>Monitoring</label>
+                <icon>images/wee_developertoolbar/monitoring.png</icon>
+                <tab_container>
+                  <logs>
+                    <label>Logs</label>
+                  </logs>               
+                </tab_container>                
+              </monitoring>                
             </items>
         </developertoolbar>
     </default>

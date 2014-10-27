@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <dev>
+            <groups>
+                <restrict>
+                    <fields>
+                        <toolbar_header translate="label comment">
+                            <label>Developer toolbar header</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>You can define a specific pattern that will be check (with preg_match) in request headers to allow toolbar usage.</comment>
+                        </toolbar_header>
+                    </fields>
+                </restrict>
+            </groups>
+        </dev>
+    </sections>                
+</config>
