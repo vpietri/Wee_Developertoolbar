@@ -28,7 +28,7 @@ document.observe("dom:loaded", function() {
 
     if (tabActive && tabActive.hasClassName('active')) {
         logFiles.each(function(file){
-            //loadLogContent(file);
+            loadLogContent(file);
         });
     }
 });

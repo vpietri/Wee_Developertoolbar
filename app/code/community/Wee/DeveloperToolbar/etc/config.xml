@@ -48,6 +48,17 @@
             </updates>
         </layout>
     </adminhtml>
+    <admin>
+        <routers>
+            <wee_developertoolbar>
+                <use>admin</use>
+                <args>
+                    <module>Wee_DeveloperToolbar</module>
+                    <frontName>developertoolbar</frontName>
+                </args>
+            </wee_developertoolbar>
+        </routers>
+    </admin>    
     <frontend>
         <routers>
             <wee_developertoolbar>
