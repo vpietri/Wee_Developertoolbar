@@ -110,7 +110,6 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
         		    $allow = false;
         		}
         }
-
         return $allow;
     }
 

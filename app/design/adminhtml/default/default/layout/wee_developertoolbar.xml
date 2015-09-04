@@ -3,7 +3,7 @@
     <default>
         <reference name="head">
             <action method="addJs"><script>mage/cookies.js</script></action>        
-			<action method="addCss"><stylesheet>css/wee_developertoolbar.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/developertoolbar.css</stylesheet></action>
             <action method="addJs"><script>wee_developertoolbar/wee_developertoolbar.js</script></action>
         </reference>
         <reference name="before_body_end">

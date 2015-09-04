@@ -6,7 +6,6 @@ DevToolbar.prototype = {
         this.selectedTab = '';
         this.selectedTabContainer = '';        
         
-        
         $('weeDeveloperToolbarContainer').select('img').first().observe('click', function(){
             $$(".weeDeveloperToolbarDetails").invoke('hide');
             $("weeDeveloperToolbar").toggle();

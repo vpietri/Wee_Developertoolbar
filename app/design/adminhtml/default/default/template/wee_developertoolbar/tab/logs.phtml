@@ -20,7 +20,7 @@ var logFiles = <?php echo $this->getJsonLogFiles() ?>;
 document.observe("dom:loaded", function() {
     logFiles.each(function(file){
         $('<?php echo $this->getIdContainer() ?>').observe('click', function() {
-            loadLogContent(file);
+            //loadLogContent(file);
         });
     });
 
@@ -28,7 +28,7 @@ document.observe("dom:loaded", function() {
 
     if (tabActive && tabActive.hasClassName('active')) {
         logFiles.each(function(file){
-            loadLogContent(file);
+            //loadLogContent(file);
         });
     }
 });

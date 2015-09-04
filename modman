@@ -5,8 +5,8 @@ app/design/frontend/base/default/layout/wee_developertoolbar.xml app/design/fron
 app/design/frontend/base/default/template/wee_developertoolbar app/design/frontend/base/default/template/wee_developertoolbar
 app/etc/modules/Wee_DeveloperToolbar.xml app/etc/modules/Wee_DeveloperToolbar.xml
 js/wee_developertoolbar js/wee_developertoolbar
-skin/adminhtml/default/default/css/wee_developertoolbar.css skin/adminhtml/default/default/css/wee_developertoolbar.css
-skin/frontend/base/default/css/wee_developertoolbar.css skin/frontend/base/default/css/wee_developertoolbar.css
+skin/adminhtml/default/default/css/developertoolbar.css skin/adminhtml/default/default/css/developertoolbar.css
+skin/frontend/base/default/css/developertoolbar.css skin/frontend/base/default/css/developertoolbar.css
 skin/adminhtml/default/default/images/wee_developertoolbar  skin/adminhtml/default/default/images/wee_developertoolbar
 skin/frontend/base/default/images/wee_developertoolbar  skin/frontend/base/default/images/wee_developertoolbar
 
