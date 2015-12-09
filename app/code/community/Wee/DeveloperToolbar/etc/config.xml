@@ -20,6 +20,11 @@
                     <data>Wee_DeveloperToolbar_Helper_Data</data>
                 </rewrite>
             </wee_developertoolbar>
+            <fpc>
+                <rewrite>
+                    <block>Wee_DeveloperToolbar_Helper_Lesti_Block</block>
+                </rewrite>
+            </fpc>
         </helpers>
         <models>
             <core>

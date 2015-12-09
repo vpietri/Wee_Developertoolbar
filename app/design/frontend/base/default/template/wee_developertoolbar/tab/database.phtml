@@ -1,4 +1,4 @@
-<?php 
+<?php
 $_helper = Mage::helper('wee_developertoolbar');
 $_profiler = $this->getProfiler();
 $_queries = $_profiler->getQueryProfiles();
@@ -10,7 +10,7 @@ $_queries = $_profiler->getQueryProfiles();
       <strong><?php echo $this->__('Executed:'); ?></strong>
     </td>
     <td>
-      <?php echo sprintf('%s queries in %s seconds', $_profiler->getTotalNumQueries(), $_profiler->getTotalElapsedSecs()); ?>  
+      <?php echo sprintf('%s queries in %s', $_profiler->getTotalNumQueries(), $_helper->formatSqlTime($_profiler->getTotalElapsedSecs())); ?>
     </td>
   </tr>
   <tr>
@@ -18,7 +18,7 @@ $_queries = $_profiler->getQueryProfiles();
       <strong><?php echo $this->__('Average query length:'); ?></strong>
     </td>
     <td>
-      <?php echo sprintf('%s seconds', $_profiler->getTotalNumQueries() &&  $_profiler->getTotalElapsedSecs() ? $_profiler->getTotalElapsedSecs()/$_profiler->getTotalNumQueries() : 0); ?>  
+      <?php echo $_helper->formatSqlTime($_profiler->getTotalNumQueries() &&  $_profiler->getTotalElapsedSecs() ? $_profiler->getTotalElapsedSecs()/$_profiler->getTotalNumQueries() : 0); ?>
     </td>
   </tr>
   <tr>
@@ -26,7 +26,7 @@ $_queries = $_profiler->getQueryProfiles();
       <strong><?php echo $this->__('Queries per second:'); ?></strong>
     </td>
     <td>
-      <?php echo ($_profiler->getTotalNumQueries() && $_profiler->getTotalElapsedSecs() ?  $_profiler->getTotalNumQueries()/$_profiler->getTotalElapsedSecs() : 0); ?>  
+      <?php echo ($_profiler->getTotalNumQueries() && $_profiler->getTotalElapsedSecs() ?  $_profiler->getTotalNumQueries()/$_profiler->getTotalElapsedSecs() : 0); ?>
     </td>
   </tr>
   <tr>
@@ -34,7 +34,7 @@ $_queries = $_profiler->getQueryProfiles();
       <strong><?php echo $this->__('Longest query length:'); ?></strong>
     </td>
     <td>
-      <?php echo $this->getLongestQueryTime(); ?>  
+      <?php echo $_helper->formatSqlTime($this->getLongestQueryTime()); ?>
     </td>
   </tr>
   <tr>
@@ -42,19 +42,19 @@ $_queries = $_profiler->getQueryProfiles();
       <strong><?php echo $this->__('Longest query:'); ?></strong>
     </td>
     <td>
-      <?php echo $_helper->formatSql(wordwrap($this->getLongestQuery())); ?>  
+      <?php echo $_helper->formatSql(wordwrap($this->getLongestQuery())); ?>
     </td>
   </tr>
 </table>
 
 <ol>
-<?php 
+<?php
   $i = 0;
   foreach ($_queries as $query): ?>
     <li class="<?php echo ($i % 2 ? 'even' : 'odd')?>">
       <?php echo $_helper->formatSql(wordwrap($query->getQuery())); ?>
       <span class="queryInfo">
-      <?php echo $this->__('Elapsed seconds:'); ?> <?php echo $query->getElapsedSecs() ?>
+      <?php echo $this->__('Elapsed:'); ?> <?php echo $_helper->formatSqlTime($query->getElapsedSecs()) ?>
       </span>
     </li>
     <?php $i++; ?>

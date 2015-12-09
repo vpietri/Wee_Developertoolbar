@@ -54,8 +54,17 @@
   margin:0px 9px 0px 0px;
 }
 
+div.tabContainer  {
+    overflow: scroll;
+    height: 600px
+}
+
 #weeDeveloperToolbarContainer ul, div.tabContent ul, div.tabContainer ul.tabContainer  {
     list-style: none outside none;
+}
+
+#weeDeveloperToolbar li img  {
+    display: inline;
 }
 
 div.weeDeveloperToolbar *, div.weeDeveloperToolbarDetails  * {

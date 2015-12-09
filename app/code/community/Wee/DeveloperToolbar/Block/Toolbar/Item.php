@@ -81,7 +81,7 @@ class Wee_DeveloperToolbar_Block_Toolbar_Item extends Wee_DeveloperToolbar_Block
                 $label = $class->{$this->_label_callback['method']}();
                 $this->setLabel($label);
             } catch (Exception $e) {
-                Mage::logException(new Exception($this->__('Specific label "%s" not handle by wee developer item block.', implode('::', $this->_label_callback))));
+                //Mage::logException(new Exception($this->__('Specific label "%s" not handle by wee developer item block.', implode('::', $this->_label_callback))));
             }
         }
 

@@ -26,13 +26,14 @@
  
 #weeDeveloperToolbarContainer ul {
   float:left;
-  padding:0px 10px 0px 8px; 
+  padding:0px 10px 0px 8px;
 }
  
 #weeDeveloperToolbarContainer ul li {
   float:left; 
   line-height:22px;
   padding:0px 15px 0px 0px;
+  
 }
 
 #weeDeveloperToolbarContainer ul li.content {
@@ -53,8 +54,17 @@
   margin:0px 9px 0px 0px;
 }
 
+div.tabContainer  {
+    overflow: scroll;
+    height: 600px
+}
+
 #weeDeveloperToolbarContainer ul, div.tabContent ul, div.tabContainer ul.tabContainer  {
     list-style: none outside none;
+}
+
+#weeDeveloperToolbar li img  {
+    display: inline;
 }
 
 div.weeDeveloperToolbar *, div.weeDeveloperToolbarDetails  * {

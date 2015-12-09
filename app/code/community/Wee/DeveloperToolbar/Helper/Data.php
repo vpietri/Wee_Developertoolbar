@@ -24,6 +24,13 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
 {
     protected $_toolbar_config;
 
+    public function formatSqlTime($time)
+    {
+        $decimals = 2;
+        $formatedTime = number_format(round(1000*$time,$decimals),$decimals);
+
+        return $formatedTime . 'ms';
+    }
 
     public function formatBytes($bytes)
     {
