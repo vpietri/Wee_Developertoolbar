@@ -19,7 +19,6 @@ var logFiles = <?php echo $this->getJsonLogFiles() ?>;
 
 document.observe("dom:loaded", function() {
     logFiles.each(function(file){
-        //console.log('<?php echo $this->getIdContainer() ?>');
         $('<?php echo $this->getIdContainer() ?>').observe('click', function() {
             //loadLogContent(file);
         });

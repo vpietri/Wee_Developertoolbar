@@ -1,13 +1,25 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <default>
+    <wee_developertoolbar>
         <reference name="head">
             <action method="addJs"><script>mage/cookies.js</script></action>        
-			<action method="addCss"><stylesheet>css/developertoolbar.css</stylesheet></action>
-            <action method="addJs"><script>wee_developertoolbar/wee_developertoolbar.js</script></action>
+            <action method="addCss">
+                <stylesheet>wee_developertoolbar/developertoolbar.css</stylesheet>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>wee_developertoolbar/wee_developertoolbar.js</script>
+             </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <script>wee_developertoolbar/sorttable.js</script>
+            </action>     
         </reference>
         <reference name="before_body_end">
-            <block type="wee_developertoolbar/toolbar" name="wee_developertoolbar" template="wee_developertoolbar/toolbar.phtml" />
+            <block
+                type="wee_developertoolbar/toolbar"
+                name="wee_developertoolbar"
+                template="wee_developertoolbar/toolbar.phtml" />
         </reference>
-    </default>
+    </wee_developertoolbar>
 </layout>
