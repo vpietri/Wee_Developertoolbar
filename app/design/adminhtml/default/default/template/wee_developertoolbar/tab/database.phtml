@@ -4,8 +4,8 @@ $_profiler = $this->getProfiler();
 $_queries = $_profiler->getQueryProfiles();
 ?>
 <?php if ($_queries): ?>
-<table border="0" cellpadding="0" cellspacing="0">
-  <tr>
+<table class="stripped" border="0" cellpadding="0" cellspacing="0">
+   <tr>
     <td>
       <strong><?php echo $this->__('Executed:'); ?></strong>
     </td>
@@ -15,7 +15,20 @@ $_queries = $_profiler->getQueryProfiles();
   </tr>
   <tr>
     <td>
-      <strong><?php echo $this->__('Average query length:'); ?></strong>
+      <strong><?php echo $this->__('Type:'); ?></strong>
+    </td>
+    <td>
+      <?php echo sprintf('%s SELECT - %s INSERT - %s UPDATE - %s DELETE - %s TRANSACTION',
+              $this->getProfiler()->getTotalNumQueries(Zend_Db_Profiler::SELECT),
+              $this->getProfiler()->getTotalNumQueries(Zend_Db_Profiler::INSERT),
+              $this->getProfiler()->getTotalNumQueries(Zend_Db_Profiler::UPDATE),
+              $this->getProfiler()->getTotalNumQueries(Zend_Db_Profiler::DELETE),
+              $this->getProfiler()->getTotalNumQueries(Zend_Db_Profiler::TRANSACTION)); ?>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong><?php echo $this->__('Average:'); ?></strong>
     </td>
     <td>
       <?php echo $_helper->formatSqlTime($_profiler->getTotalNumQueries() &&  $_profiler->getTotalElapsedSecs() ? $_profiler->getTotalElapsedSecs()/$_profiler->getTotalNumQueries() : 0); ?>
@@ -23,7 +36,7 @@ $_queries = $_profiler->getQueryProfiles();
   </tr>
   <tr>
     <td>
-      <strong><?php echo $this->__('Queries per second:'); ?></strong>
+      <strong><?php echo $this->__('Queries/second:'); ?></strong>
     </td>
     <td>
       <?php echo ($_profiler->getTotalNumQueries() && $_profiler->getTotalElapsedSecs() ?  $_profiler->getTotalNumQueries()/$_profiler->getTotalElapsedSecs() : 0); ?>
@@ -31,7 +44,7 @@ $_queries = $_profiler->getQueryProfiles();
   </tr>
   <tr>
     <td>
-      <strong><?php echo $this->__('Longest query length:'); ?></strong>
+      <strong><?php echo $this->__('Longest:'); ?></strong>
     </td>
     <td>
       <?php echo $_helper->formatSqlTime($this->getLongestQueryTime()); ?>
@@ -39,25 +52,40 @@ $_queries = $_profiler->getQueryProfiles();
   </tr>
   <tr>
     <td>
-      <strong><?php echo $this->__('Longest query:'); ?></strong>
+      <strong><?php echo $this->__('Longest:'); ?></strong>
     </td>
     <td>
       <?php echo $_helper->formatSql(wordwrap($this->getLongestQuery())); ?>
     </td>
   </tr>
+
 </table>
 
-<ol>
+<table class="stripped" >
+    <tr>
+        <th>#</th>
+        <th>Sql</th>
+        <th><?php echo $this->__('Elapsed'); ?></th>
+    </tr>
+<thead>
+</thead>
+<tbody>
 <?php
   $i = 0;
   foreach ($_queries as $query): ?>
-    <li class="<?php echo ($i % 2 ? 'even' : 'odd')?>">
-      <?php echo $_helper->formatSql(wordwrap($query->getQuery())); ?>
-      <span class="queryInfo">
-      <?php echo $this->__('Elapsed:'); ?> <?php echo $_helper->formatSqlTime($query->getElapsedSecs()) ?>
-      </span>
-    </li>
+    <tr class="<?php echo ($i % 2 ? 'even' : 'odd')?>">
+      <td><?php echo $i;?></td>
+      <td>
+          <?php echo $_helper->formatSql(wordwrap($query->getQuery())); ?>
+      </td>
+      <td>
+          <span class="queryInfo">
+           <?php echo $_helper->formatSqlTime($query->getElapsedSecs()) ?>
+          </span>
+      </td>
+    </tr>
     <?php $i++; ?>
   <?php endforeach ?>
-</ol>
+</tbody>
+</table>
 <?php  endif ?>

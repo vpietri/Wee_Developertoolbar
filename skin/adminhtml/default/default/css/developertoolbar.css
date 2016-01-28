@@ -162,7 +162,7 @@ span.weeDeveloperToolbarLogInfo {
   font-weight:bold;
 }
 
-.profilerTable tr.odd td {
+.stripped tr.odd td {
   background:#DDDDDD;     
 }
 
@@ -194,6 +194,14 @@ span.weeDeveloperToolbarLogInfo {
 
 #tabContent_blocks ul li.rootElement, #tabContent_events ul li.rootElement  {
   background:#DDDDDD;
+}
+
+input.developerToolbar {
+    display: inline;
+    padding:0;
+    height:1.313rem; 
+    width:10%
+    
 }
 
 button.developerToolbar::-moz-focus-inner {

@@ -26,37 +26,41 @@ class Wee_DeveloperToolbar_Block_Tab_Blocks extends Wee_DeveloperToolbar_Block_T
         parent::__construct($name, $label);
         $this->setTemplate('wee_developertoolbar/tab/blocks.phtml');
     }
-    
+
     public function getRootBlock()
     {
-        return Mage::app()->getLayout()->getBlock('root');     
+        return Mage::app()->getLayout()->getBlock('root');
     }
 
     public function printBlocks($block)
     {
         $out = '';
-        if ($block->getChild()) {
-            $sortedChildren = $block->getSortedChildren();
-            $out .= '<ul>';
-            foreach ($sortedChildren as $childname) {
-                $child = $block->getChild($childname);
-                if (!$child){
-                  continue;
+        if($block) {
+            if ($block->getChild()) {
+                $sortedChildren = $block->getSortedChildren();
+                $out .= '<ul>';
+                foreach ($sortedChildren as $childname) {
+                    $child = $block->getChild($childname);
+                    if (!$child){
+                      continue;
+                    }
+                    $hasChildren =  $child->getChild() ? true : false;
+                    $out .= '<li '.($hasChildren ? 'class="rootElement"' : '').'>';
+                    $out .= '<a href="javascript:void(0);" class="toggleBlogProperties">'.$child->getNameInLayout().'</a>';
+                    $out .= $this->printBlockProperties($child);
+                    if ($hasChildren) {
+                        $out .= $this->printBlocks($child);
+                    }
+                    $out .= '</li>';
                 }
-                $hasChildren =  $child->getChild() ? true : false;
-                $out .= '<li '.($hasChildren ? 'class="rootElement"' : '').'>';
-                $out .= '<a href="javascript:void(0);" class="toggleBlogProperties">'.$child->getNameInLayout().'</a>';
-                $out .= $this->printBlockProperties($child);
-                if ($hasChildren) {
-                    $out .= $this->printBlocks($child);
-                }
-                $out .= '</li>';
+                $out .= '</ul>';
             }
-            $out .= '</ul>';
+        } else {
+            $out = 'No block information available. FPC?';
         }
         return $out;
     }
-    
+
     protected function printBlockProperties(Mage_Core_Block_Abstract $block)
     {
         $properties = '<ul class="blockProperties" style="display:none;">';
