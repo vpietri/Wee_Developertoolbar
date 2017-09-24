@@ -27,7 +27,7 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
     public function formatSqlTime($time)
     {
         $decimals = 2;
-        $formatedTime = number_format(round(1000*$time,$decimals),$decimals);
+        $formatedTime = number_format(round(1000*$time,$decimals),$decimals, '.', '');
 
         return $formatedTime . 'ms';
     }
@@ -71,6 +71,8 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
 
         $allowedIps = '';
         $toolbarHeader = '';
+        $toolbarHeaderExclude = '';
+
         //When cache activated we do not have acces to current storeId and can throw an exception in Mage::app()->getStore()
         // on call to isToolbarAccessAllowed in Wee_DeveloperToolbar_Model_Resource
         try {
@@ -81,11 +83,16 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
                     $toolbarConfig = unserialize($toolbarConfig);
                     $allowedIps = $toolbarConfig['ips'];
                     $toolbarHeader = $toolbarConfig['header'];
+                    $toolbarHeaderExclude = $toolbarConfig['header_exclude'];
                 } else {
                     $allowedIps = Mage::getStoreConfig('dev/restrict/allow_ips');
                     $toolbarHeader = Mage::getStoreConfig('dev/restrict/toolbar_header');
+                    $toolbarHeaderExclude = Mage::getStoreConfig('dev/restrict/toolbar_header_exclude');
 
-                    Mage::app()->saveCache(serialize(array('ips'=>$allowedIps,'header'=>$toolbarHeader)), $cacheKey);
+                    Mage::app()->saveCache(serialize(array('ips'=>$allowedIps,
+                            'header'=>$toolbarHeader,
+                            'header_exclude'=>$toolbarHeaderExclude
+                            )), $cacheKey);
                 }
             } else {
 
@@ -94,6 +101,7 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
         } catch (Exception $e) {
             //Mage::getIsDeveloperMode()
         }
+
 
         $clientIp = $this->_getRequest()->getClientIp();
 
@@ -112,13 +120,29 @@ class Wee_DeveloperToolbar_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
         if(!empty($toolbarHeader)) {
-            $helper = Mage::helper('core/http');
-        		if(!preg_match('/' . $toolbarHeader . '/', $helper->getHttpUserAgent(true))) {
-        		    $allow = false;
-        		}
+            if(!preg_match('/' . $toolbarHeader . '/', Mage::helper('core/http')->getHttpUserAgent(true))) {
+                $allow = false;
+            }
         }
+
+        if(!empty($toolbarHeaderExclude)) {
+
+            if(preg_match('/' . $toolbarHeaderExclude . '/', Mage::helper('core/http')->getHttpUserAgent(true))) {
+                $allow = false;
+            }
+        }
+
         return $allow;
     }
+
+
+
+
+
+
+
+
+
 
     function getToolbarConfig($name=false)
     {

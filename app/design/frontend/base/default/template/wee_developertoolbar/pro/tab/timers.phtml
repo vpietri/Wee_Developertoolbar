@@ -1,0 +1,30 @@
+<?php
+$_helper = Mage::helper('wee_developertoolbar');
+$timers = $this->getTimerData();
+
+$i = 0;
+?>
+<table class="timerTable stripped sortable" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>Code</th>
+    <th>Number</th>
+    <th>Class</th>
+    <th>Template (Block Id)</th>
+    <th>Childs</th>
+    <th sort="float">Creating</th>
+    <th sort="float">Rendering</th>
+  </tr>
+<?php foreach ($timers as $blockName=>$blockTimers):?>
+<?php if (!empty($blockTimers[7])) continue; ?>
+  <tr class="<?php echo ($i % 2 ? 'even' : 'odd'); ?>">
+    <td><?php echo $blockName . (!empty($blockTimers[5]) ? ' <i>('.$blockTimers[5].')</i>' :''); ?></td>
+    <td><?php echo $blockTimers[0]; ?></td>
+    <td><?php echo $blockTimers[1]; ?></td>
+    <td><?php echo $blockTimers[2]; ?></td>
+    <td><?php echo $blockTimers[7]; ?></td>
+    <td><?php echo $_helper->formatSqlTime($blockTimers[3]); ?></td>
+    <td><?php echo $_helper->formatSqlTime($blockTimers[4]); ?></td>
+  </tr>
+<?php $i++; ?>
+<?php endforeach;?>
+</table>

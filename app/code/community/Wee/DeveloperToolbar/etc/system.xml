@@ -12,8 +12,17 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                            <comment>You can define a specific pattern that will be check (with preg_match) in request headers to allow toolbar usage.</comment>
+                            <comment>You can define a specific pattern that will be check (with preg_match) in request headers to ACTIVATE toolbar usage. Need to be set if you want to use in production.</comment>
                         </toolbar_header>
+                        <toolbar_header_exclude translate="label comment">
+                            <label>Developer toolbar header to exclude</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>You can define a specific pattern that will be check (with preg_match) in request headers to DEACTIVATE toolbar. Need to be set if you want to hide from testing tools.</comment>
+                        </toolbar_header_exclude>                        
                     </fields>
                 </restrict>
             </groups>

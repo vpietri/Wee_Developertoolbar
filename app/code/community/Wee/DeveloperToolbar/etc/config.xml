@@ -26,10 +26,21 @@
                 </rewrite>
             </fpc>
         </helpers>
+        <resource>
+            <connection>
+                <types>
+                    <pdo_mysql>
+                        <adapter/>
+                        <class>Wee_DeveloperToolbar_Model_Pro_Resource_Type_Db_Pdo_Mysql</class>
+                    </pdo_mysql>
+                </types>
+            </connection>
+        </resource>        
         <models>
             <core>
                 <rewrite>
                     <resource>Wee_DeveloperToolbar_Model_Resource</resource>
+                    <layout>Wee_DeveloperToolbar_Model_Pro_Core_Layout</layout>
                 </rewrite>
             </core>
         </models>
@@ -43,6 +54,81 @@
                     </wee_developertoolbar>
                 </observers>
             </controller_action_layout_load_before>
+            
+          <!-- Trace bloc and layout -->
+          <controller_action_predispatch>
+            <observers>
+              <mrsgto_checkup_controller_predispatch>
+                <type>singleton</type>
+                <class>mrsgto_checkup/timer</class>
+                <method>timer_predispatch</method>
+              </mrsgto_checkup_controller_predispatch>
+            </observers>
+          </controller_action_predispatch>
+          <!-- <controller_action_layout_load_before>
+            <observers>
+              <mrsgto_checkup_controller_layout_load_before>
+                <type>singleton</type>
+                <class>mrsgto_checkup/timer</class>
+                <method>timer_layout_load_before</method>
+              </mrsgto_checkup_controller_layout_load_before>
+            </observers>
+          </controller_action_layout_load_before>
+          <controller_action_layout_render_before>
+            <observers>
+              <mrsgto_checkup_controller_layout_render_before>
+                <type>singleton</type>
+                <class>mrsgto_checkup/timer</class>
+                <method>timer_layout_render_before</method>
+              </mrsgto_checkup_controller_layout_render_before>
+            </observers>
+          </controller_action_layout_render_before>
+          <controller_action_postdispatch>
+            <observers>
+              <mrsgto_checkup_controller_postdispatch>
+                <type>singleton</type>
+                <class>mrsgto_checkup/timer</class>
+                <method>timer_postdispatch</method>
+              </mrsgto_checkup_controller_postdispatch>
+            </observers>
+          </controller_action_postdispatch> -->
+          <adm_core_layout_block_create_before>
+            <observers>
+              <mrsgto_checkup_block_create_begin_timer>
+                <type>singleton</type>
+                <class>mrsgto_checkup/timer</class>
+                <method>timer_block_create_before</method>
+              </mrsgto_checkup_block_create_begin_timer>
+            </observers>
+          </adm_core_layout_block_create_before>
+          <adm_core_layout_block_create_after>
+            <observers>
+              <mrsgto_checkup_block_create_end_timer>
+                <type>singleton</type>
+                <class>mrsgto_checkup/timer</class>
+                <method>timer_block_create_after</method>
+              </mrsgto_checkup_block_create_end_timer>
+            </observers>
+          </adm_core_layout_block_create_after>
+          <core_block_abstract_to_html_before>
+            <observers>
+              <mrsgto_checkup_block_render_begin_timer>
+                <type>singleton</type>
+                <class>mrsgto_checkup/timer</class>
+                <method>timer_block_render_before</method>
+              </mrsgto_checkup_block_render_begin_timer>
+            </observers>
+          </core_block_abstract_to_html_before>
+          <core_block_abstract_to_html_after>
+            <observers>
+              <mrsgto_checkup_block_render_end_timer>
+                <type>singleton</type>
+                <class>mrsgto_checkup/timer</class>
+                <method>timer_block_render_after</method>
+              </mrsgto_checkup_block_render_end_timer>
+            </observers>
+          </core_block_abstract_to_html_after>
+            
         </events>
     </global>
     <adminhtml>
@@ -75,6 +161,16 @@
                 </args>
             </wee_developertoolbar>
         </routers>
+        <events>
+          <controller_front_send_response_after>
+                <observers>
+                    <checkup>
+                        <class>Wee_DeveloperToolbar_Model_Pro_Observer</class>
+                        <method>saveTrace</method>
+                    </checkup>
+                </observers>
+          </controller_front_send_response_after>
+        </events>        
         <layout>
             <updates>
                 <wee_developertoolbar>
@@ -137,8 +233,38 @@
                     <label>Logs</label>
                   </logs>               
                 </tab_container>                
-              </monitoring>                
+              </monitoring>     
+              <trace>
+                <sort_order>65</sort_order>
+                <label>Mrsgto_Checkup_Helper_Analyzer::getLabelTrace</label>
+                <icon>images/mrsgto/checkup/stack.png</icon>
+                <tab_container>
+                  <list>
+                    <label>All suspected calls</label>
+                    <class_tab>Wee_DeveloperToolbar_Block_Pro_Tab_List</class_tab>
+                  </list>
+                  <statistics>
+                    <label>Statistics</label>
+                    <class_tab>Wee_DeveloperToolbar_Block_Pro_Tab_Statistics</class_tab>
+                  </statistics>                  
+                </tab_container>                
+              </trace>       
+              <timers>
+                <sort_order>67</sort_order>
+                <label>Timers</label>
+                <tab_container>
+                  <list>
+                    <label>All Timers</label>
+                    <class_tab>Wee_DeveloperToolbar_Block_Pro_Tab_Timers</class_tab>
+                  </list>              
+                </tab_container>                
+              </timers>                            
             </items>
         </developertoolbar>
+        <dev>
+          <restrict>
+            <toolbar_header_exclude><![CDATA[Jmeter|Gatling]]></toolbar_header_exclude>
+          </restrict>
+        </dev>
     </default>
 </config>
