@@ -4,7 +4,7 @@ class Wee_DeveloperToolbar_Block_Pro_Tab_Statistics extends Wee_DeveloperToolbar
     public function __construct($name, $label)
     {
         parent::__construct($name, $label);
-        $this->setTemplate('mrsgto/pro/tab/statistics.phtml');
+        $this->setTemplate('wee_developertoolbar/pro/tab/statistics.phtml');
     }
 
 

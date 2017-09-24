@@ -3,13 +3,13 @@ $traces = $this->getSuspectedCalls();
 $i = 0;
 ?>
 <form action="" method="post">
-<input type="text" class="developerToolbar"  id="trace_part" name="trace_part" value="<?php echo Mage::getSingleton('mrsgto_checkup/session')->getTraceSqlPart() ? Mage::getSingleton('mrsgto_checkup/session')->getTraceSqlPart() : ''; ?>" />
+<input type="text" class="developerToolbar"  id="trace_part" name="trace_part" value="<?php echo Mage::getSingleton('wee_developertoolbar/pro_session')->getTraceSqlPart() ? Mage::getSingleton('wee_developertoolbar/pro_session')->getTraceSqlPart() : ''; ?>" />
 <input type="button" class="developerToolbar" onClick="setTracePart()" name="submit"  value="<?php echo $this->__('Update'); ?>">
 </form>
 <span id="trace-part-result"></span>
 <script type="text/javascript">
 setTracePart = function() {
-  new Ajax.Updater('trace-part-result', '<?php echo Mage::getUrl('mrsgto_checkup/index/tracePart'); ?>', {
+  new Ajax.Updater('trace-part-result', '<?php echo Mage::getUrl('wee_developertoolbar/pro_index/tracePart'); ?>', {
       parameters: { part: $('trace_part').value }
   });
 }

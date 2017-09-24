@@ -4,7 +4,7 @@ class Wee_DeveloperToolbar_Block_Pro_Tab_Timers extends Wee_DeveloperToolbar_Blo
     public function __construct($name, $label)
     {
         parent::__construct($name, $label);
-        $this->setTemplate('mrsgto/pro/tab/timers.phtml');
+        $this->setTemplate('wee_developertoolbar/pro/tab/timers.phtml');
         $this->setIsActive(true);
     }
 
